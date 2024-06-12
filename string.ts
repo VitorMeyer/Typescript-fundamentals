@@ -21,13 +21,13 @@
         for (let i = 0; i < arr.length ; i++){
             result += arr[i];
             if(i < arr.length -1){
-                result += " ";
+                result ;
             }
         }
         return result;
     }
    
-    async smallestString(str: string[]): Promise<string> {
+    async smallestString(str: string[]): Promise<number> {
         let min = str[0].length;
         let result = str[0]
         for (let i=1; i < str.length;i++){
@@ -37,13 +37,29 @@
             }
         }
 
-        return result;
+        return (min);
     }
 
-     
+     async minimunPrefixString(str: string[]): Promise<string> {
+        let min = await this.smallestString(str)
+        let result = ""
+
+        
+        for (let i=0; i < min; i ++){
+            const  charCurrent = str[0][i]
+
+            for(let j=1; j<str.length; j++){
+                if(str[j][i] !== charCurrent){
+                    return result;
+                }
+            }
+
+            result += charCurrent;
+        }
+    return result;
 
 }
-
+ }
 const stringMath = new StringMath();
 
 const StringRevers =  stringMath.ReverseWordsString("Hello World").then(result => {
@@ -52,4 +68,7 @@ const StringRevers =  stringMath.ReverseWordsString("Hello World").then(result =
 
 const StringSmallest = stringMath.smallestString(["Hello", "World", "Hello World"]).then(result => {
     console.log("Resultado da string com menor tamanho: ",result);  // Expected output: "Hello"
+});
+const StringMinimunPrefix = stringMath.minimunPrefixString([ "flower", "flow", "flight" ]).then(result => {
+    console.log("Resultado do menor prefixo: ",result);  // Expected output: "Hello"
 });
