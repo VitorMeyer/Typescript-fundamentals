@@ -84,6 +84,36 @@
         return result;
     }
 
+    async intToRoman(num: number): Promise<string> {
+        const map: { value: number, symbol: string }[] = [
+            { value: 1000, symbol: "M" },
+            { value: 900, symbol: "CM" },
+            { value: 500, symbol: "D" },
+            { value: 400, symbol: "CD" },
+            { value: 100, symbol: "C" },
+            { value: 90, symbol: "XC" },
+            { value: 50, symbol: "L" },
+            { value: 40, symbol: "XL" },
+            { value: 10, symbol: "X" },
+            { value: 9, symbol: "IX" },
+            { value: 5, symbol: "V" },
+            { value: 4, symbol: "IV" },
+            { value: 1, symbol: "I" }
+        ];
+    
+        let result = "";
+    
+        for (const { value, symbol } of map) {
+            while (num >= value) {
+                result += symbol;
+                num -= value;
+            }
+        }
+    
+        return result;
+    }
+    
+    
 
 };
 const stringMath = new StringMath();
@@ -101,4 +131,7 @@ const StringMinimunPrefix = stringMath.minimunPrefixString([ "flower", "flow", "
 const romanNumber = "MCMXCIV"
 const StringRomanToInt = stringMath.romanToInt(romanNumber).then(result => {
     console.log(`Resultado da conversão do número romano ${romanNumber} para inteiro: `,result);  // Expected output: 1994
+});
+const NumberRoman = stringMath.intToRoman(1994).then(result => {
+    console.log(`Resultado da conversão do número inteiro 1994 para romano: `,result);  // Expected output: MCMXCIV
 });
