@@ -58,8 +58,34 @@
         }
     return result;
 
-}
- }
+    }
+
+    async romanToInt(str: string): Promise<number> {
+        const map: {[key:string]:number} = {
+            "I": 1,
+            "V": 5,
+            "X": 10,
+            "L": 50,
+            "C": 100,
+            "D": 500,
+            "M": 1000
+        }
+        let result = 0;
+        let prevValue = 0;
+        for(let i= str.length -1; i >= 0; i--){
+            const currentValue = map[str[i]];
+                if(currentValue < prevValue){
+                    result -= currentValue
+                } else {
+                    result += currentValue
+                }
+                prevValue = currentValue;
+        }
+        return result;
+    }
+
+
+};
 const stringMath = new StringMath();
 
 const StringRevers =  stringMath.ReverseWordsString("Hello World").then(result => {
@@ -70,5 +96,9 @@ const StringSmallest = stringMath.smallestString(["Hello", "World", "Hello World
     console.log("Resultado da string com menor tamanho: ",result);  // Expected output: "Hello"
 });
 const StringMinimunPrefix = stringMath.minimunPrefixString([ "flower", "flow", "flight" ]).then(result => {
-    console.log("Resultado do menor prefixo: ",result);  // Expected output: "Hello"
+    console.log("Resultado do menor prefixo: ",result);  // Expected output: "fl"
+});
+const romanNumber = "MCMXCIV"
+const StringRomanToInt = stringMath.romanToInt(romanNumber).then(result => {
+    console.log(`Resultado da conversão do número romano ${romanNumber} para inteiro: `,result);  // Expected output: 1994
 });
